@@ -44,20 +44,6 @@ test-coverage:
 	go test -v -coverprofile=coverage.out ./...
 	go tool cover -html=coverage.out -o coverage.html
 
-# Generate protobuf code
-.PHONY: proto
-proto:
-	@echo "Generating protobuf code..."
-	protoc --go_out=. --go_opt=paths=source_relative \
-		--go-grpc_out=. --go-grpc_opt=paths=source_relative \
-		$(PROTO_DIR)/*.proto
-
-# Generate Swagger documentation
-.PHONY: swagger
-swagger:
-	@echo "Generating Swagger documentation..."
-	swag init -g cmd/goforge/main.go
-
 # Run linting
 .PHONY: lint
 lint:
@@ -83,24 +69,6 @@ clean:
 	rm -rf $(BUILD_DIR)
 	rm -f coverage.out coverage.html
 
-# Run the application in development mode
-.PHONY: dev
-dev: build
-	@echo "Running in development mode..."
-	./$(BUILD_DIR)/$(BINARY_NAME)
-
-# Docker build
-.PHONY: docker-build
-docker-build:
-	@echo "Building Docker image..."
-	docker build -t $(BINARY_NAME):latest .
-
-# Docker run
-.PHONY: docker-run
-docker-run:
-	@echo "Running Docker container..."
-	docker run --rm -p 8080:8080 $(BINARY_NAME):latest
-
 # Development setup
 .PHONY: setup
 setup:
@@ -120,14 +88,9 @@ help:
 	@echo "  install       - Install the binary to GOPATH/bin"
 	@echo "  test          - Run tests"
 	@echo "  test-coverage - Run tests with coverage"
-	@echo "  proto         - Generate protobuf code"
-	@echo "  swagger       - Generate Swagger documentation"
 	@echo "  lint          - Run linting"
 	@echo "  fmt           - Format code"
 	@echo "  tidy          - Tidy dependencies"
 	@echo "  clean         - Clean build artifacts"
-	@echo "  dev           - Run in development mode"
-	@echo "  docker-build  - Build Docker image"
-	@echo "  docker-run    - Run Docker container"
 	@echo "  setup         - Setup development environment"
 	@echo "  help          - Show this help message"
