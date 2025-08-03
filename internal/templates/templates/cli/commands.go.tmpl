@@ -1,0 +1,40 @@
+package commands
+
+import (
+	"fmt"
+
+	"github.com/spf13/cobra"
+)
+
+func NewVersionCommand() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "version",
+		Short: "Print the version number",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println("{{.ProjectName}} v1.0.0")
+		},
+	}
+
+	return cmd
+}
+
+func NewExampleCommand() *cobra.Command {
+	var name string
+	var count int
+
+	cmd := &cobra.Command{
+		Use:   "example",
+		Short: "An example command",
+		Long:  `This is an example command that demonstrates how to use flags and arguments.`,
+		Run: func(cmd *cobra.Command, args []string) {
+			for i := 0; i < count; i++ {
+				fmt.Printf("Hello, %s! (%d/%d)\n", name, i+1, count)
+			}
+		},
+	}
+
+	cmd.Flags().StringVarP(&name, "name", "n", "World", "Name to greet")
+	cmd.Flags().IntVarP(&count, "count", "c", 1, "Number of times to greet")
+
+	return cmd
+}

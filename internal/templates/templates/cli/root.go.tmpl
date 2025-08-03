@@ -1,0 +1,29 @@
+package cli
+
+import (
+	"os"
+
+	"github.com/spf13/cobra"
+	"{{.ProjectName}}/internal/cli/commands"
+)
+
+func NewRootCommand() *cobra.Command {
+	rootCmd := &cobra.Command{
+		Use:   "{{.ProjectName}}",
+		Short: "{{.ProjectName}}: A CLI application",
+		Long:  `{{.ProjectName}} is a command-line interface application built with Cobra.`,
+	}
+
+	// Add subcommands
+	rootCmd.AddCommand(commands.NewVersionCommand())
+	rootCmd.AddCommand(commands.NewExampleCommand())
+
+	return rootCmd
+}
+
+func Execute() {
+	rootCmd := NewRootCommand()
+	if err := rootCmd.Execute(); err != nil {
+		os.Exit(1)
+	}
+}

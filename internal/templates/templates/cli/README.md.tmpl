@@ -1,0 +1,40 @@
+# {{.ProjectName}}
+
+A CLI application built with Go and Cobra.
+
+## Installation
+
+```bash
+go install
+```
+
+## Usage
+
+```bash
+{{.ProjectName}} [command]
+```
+
+### Available Commands
+
+- `version`: Print the version number
+- `example`: An example command with flags
+
+### Examples
+
+```bash
+# Print version
+{{.ProjectName}} version
+
+# Run example command
+{{.ProjectName}} example --name "John" --count 3
+```
+
+## Development
+
+```bash
+# Build the application
+go build -o bin/{{.ProjectName}} ./cmd/{{.ProjectName}}
+
+# Run tests
+go test ./...
+```
